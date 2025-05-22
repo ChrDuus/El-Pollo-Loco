@@ -107,6 +107,8 @@ class Character extends MovableObject {
       this.playAnimation(this.IMAGES_WALKING);
     } else if (this.isHurt()) {
       this.playAnimation(this.IMAGES_IDLE);
+    }else{
+      this.playAnimation(this.IMAGES_IDLE)
     }
   }
 

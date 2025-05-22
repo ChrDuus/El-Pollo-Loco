@@ -44,13 +44,16 @@
                         <h4>Mobile</h4>
                         <p> <img src="./img/jump.png">: jump</p>
                         <p> <img src="./img/throw.png">: throw bottle</p>
-                        <a href="" target="">Impressum</a>
-                        <a href="" target="">Datenschutz</a>
+                        
             </div>
         </div>
-        <button id="music1" class="btn" onclick="music1()">MUSIC ON</button>
-        <button id="music2" class="btn" onclick="music2()">MUSIC</button>
+        <button id="music1" class="btn" onclick="music1(); setMusicButton()">Music on</button>
+        <!-- <button id="music2" class="btn" onclick="music2()">MUSIC</button> -->
         <button id="infoBtn" class="btn" onclick="info()">INFO</button>
+         <div class="imprint">
+            <a href="imprint.html">Imprint</a>
+        </div>
+       
         <button id="btn" class="btn" onclick="init(), screensize()">START</button>
         <div class="input-container b">
             <div>
@@ -85,7 +88,13 @@
     <div id="youLostScreen" class="start_end_screen d-none">
         <img src="./img/5_background/first_half_background.png" class="start_end_screen img_1">
         <img src="./img/9_intro_outro_screens/game_over/oh no you lost!.png" class="start_end_screen img_2">
-        <a href="index.html" class="btn restart_mobile">RESTART</a>
+        <a href="index.html" class="btn restart_mobile">Back to Menu</a>
+    </div>
+
+      <div id="endScreenWon" class="start_end_screen d-none">
+        <img src="./img/5_background/first_half_background.png" class="start_end_screen img_1">
+        <img src="./img/9_intro_outro_screens/game_over/YouWon.png" class="start_end_screen img_2">
+        <a href="index.html" class="btn restart_mobile">Back to Menu</a>
     </div>
 
     <div class="mobile-screen" id="mobilescreen">

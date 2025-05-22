@@ -53,7 +53,7 @@ class Endboss extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_HURTING);
     this.loadImages(this.IMAGES_DEAD);
-    this.speed = 0.15;
+    this.speed = 0.125;
     this.animate();
   }
 
@@ -90,7 +90,7 @@ class Endboss extends MovableObject {
       clearInterval(intervallId);
       document.getElementById("canvas").classList.add("d-none");
       document.getElementById("startScreen").classList.add("d-none");
-      document.getElementById("endScreen").classList.remove("d-none");
+      document.getElementById("endScreenWon").classList.remove("d-none");
     }, 1200);
   }
 

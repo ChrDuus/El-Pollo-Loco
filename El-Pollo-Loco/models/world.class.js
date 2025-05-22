@@ -187,7 +187,7 @@ class World {
      */
     checkCharacterIsNearToEndboss() {
         this.level.endboss.forEach((endboss) => {
-            if (this.character.x > 1800) {
+            if (this.character.x > 1700) {
                 endboss.letEndbossWalk();
             }
             if (endboss.x < 0) {

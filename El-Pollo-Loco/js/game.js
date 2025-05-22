@@ -168,3 +168,12 @@ function playMusicFunction2() {
         playMusic2.pause();
     }
 }
+
+function setMusicButton(){
+    let button = document.getElementById('music1');
+    if(musicOn== false){
+        button.innerText = 'Music On'
+    }else{
+        button.innerText= 'Music Off'
+    }
+}

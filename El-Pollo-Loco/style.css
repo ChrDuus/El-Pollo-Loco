@@ -170,6 +170,14 @@ a {
     display: none !important;
 }
 
+.imprint{
+    position: absolute;
+    left: 50%;
+    bottom: 5%;
+    z-index: 6;
+   
+}
+
 @media only screen and (max-width: 900px) {
     .mobile_controlls {
         display: flex;
@@ -240,7 +248,7 @@ a {
     position: absolute;
     display: flex;
     flex-direction: column;
-    bottom: 17%;
+    bottom: 22%;
     right: 13%;
     z-index: 99;
     color: rgb(5, 5, 5);
