@@ -88,6 +88,7 @@ class Endboss extends MovableObject {
 
     setTimeout(() => {
       clearInterval(intervallId);
+      clearAllIntervals()      
       document.getElementById("canvas").classList.add("d-none");
       document.getElementById("startScreen").classList.add("d-none");
       document.getElementById("endScreenWon").classList.remove("d-none");
@@ -111,4 +112,14 @@ class Endboss extends MovableObject {
       }
     }, 360);
   }
+}
+
+function clearAllIntervals() {
+  for (let i = 1; i < 99999; i++) {
+    clearInterval(i);
+  }
+}
+
+function stopSounds(){
+  this.character.walkingSound= ''
 }

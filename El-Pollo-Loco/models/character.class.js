@@ -61,9 +61,11 @@ class Character extends MovableObject {
 
   world;
   speed = 4.5;
+  soundManager = new SoundManager()
   walkingSound = new Audio('audio/pepe_runing.mp3')
   hitSound = new Audio('audio/hit.mp3')
   jumpSound = new Audio('audio/jump.mp3')
+  
 
   constructor() {
     super().loadImage("./img/2_character_pepe/2_walk/W-21.png");

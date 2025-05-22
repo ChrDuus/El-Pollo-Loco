@@ -2,8 +2,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let playMusic1 = new Audio('audio/music1.mp3');
-let playMusic2 = new Audio('audio/music2.mp3');
 let musicOn = false;
+
 
 
 
@@ -141,15 +141,7 @@ function music1() {
     playMusicFunction1();
 }
 
-function music2() {
-    if (musicOn == false) {
-        musicOn = true;
-    } else {
-        musicOn = false;
-        playMusicFunction1();
-    }
-    playMusicFunction2();
-}
+
 
 function playMusicFunction1() {
     if (musicOn == true) {
@@ -160,14 +152,7 @@ function playMusicFunction1() {
     }
 }
 
-function playMusicFunction2() {
-    if (musicOn == true) {
-        playMusic2.play();
-    }
-    if (musicOn == false) {
-        playMusic2.pause();
-    }
-}
+
 
 function setMusicButton(){
     let button = document.getElementById('music1');

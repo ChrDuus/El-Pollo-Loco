@@ -5,6 +5,7 @@ class World {
     ctx;
     keyboard;
     camera_X = 0;
+    soundManager = new SoundManager();
     statusbarEnergy = new StatusbarEnergy();
     statusbarBottles = new StatusbarBottles();
     statusbarCoins = new StatusbarCoins();
@@ -49,6 +50,7 @@ class World {
             this.checkCollisionWithCoin();
             this.checkCollisionBottleAndEndboss();
             this.checkTrowableObjects();
+            this.checkIfGameIsOver()
         }, 150);
         setInterval(() => {
             this.checkCollisionBottleAndEndboss();
@@ -194,6 +196,14 @@ class World {
                 this.character.characterDies();
             }
         });
+    }
+
+    checkIfGameIsOver(){
+        if(this.character.energy == 0 ){
+            
+        }else {
+        return
+        }
     }
 
 
