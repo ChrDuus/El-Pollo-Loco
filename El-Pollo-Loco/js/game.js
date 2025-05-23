@@ -3,7 +3,8 @@ let world;
 let keyboard = new Keyboard();
 let playMusic1 = new Audio('audio/music1.mp3');
 let musicOn = false;
-
+let soundIsMuted = false
+let soundManager = new SoundManager()
 
 
 
@@ -58,11 +59,23 @@ function start() {
 
 
 
+
 function info() {
     document.getElementById('infoBox').classList.toggle('d-none');
 }
 
+function toggleSound() {
+    if (!window.soundManager) return;
 
+    const isCurrentlyMuted = window.soundManager.globalVolume === 0;
+    if (isCurrentlyMuted) {
+        window.soundManager.unmuteAll();
+        document.getElementById("inGameSounds").textContent = "🔊 Mute Sounds";
+    } else {
+        window.soundManager.muteAll();
+        document.getElementById("inGameSounds").textContent = "🔇 Unmute";
+    }
+}
 
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 68) {
@@ -132,12 +145,7 @@ function touchUpJump(){
 }
 
 function music1() {
-    if (musicOn == false) {
-        musicOn = true;
-    } else {
-        musicOn = false;
-        playMusicFunction2();
-    }
+    musicOn = !musicOn
     playMusicFunction1();
 }
 

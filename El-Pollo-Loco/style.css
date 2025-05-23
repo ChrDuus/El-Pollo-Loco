@@ -89,7 +89,7 @@ canvas {
     bottom: 25%;
     top: 25%;
     left: 12%;
-    background-color: rgba(231, 141, 6, 0.7);
+    background-color: rgba(231, 141, 6, 0.911);
     color: rgba(252, 236, 7, 0.8);
     display: flex;
     flex-direction: column;
@@ -175,10 +175,30 @@ a {
     left: 50%;
     bottom: 5%;
     z-index: 6;
+    width: 55px;
+    border-radius: 12px;
+
    
 }
+.imprintTag{
+    margin: 0;
+    color:rgba(252, 236, 7, 0.8);
+    background-color:#d66e0d;
+    border-radius: 12px;
+}
+.imprint :hover{
+ background-color: rgb(150, 84, 9);
+}
 
-@media only screen and (max-width: 900px) {
+#inGameSounds{
+    font-size: 16px;
+    position: absolute;
+    top: 9%;
+    width:150px;
+    height:65px;
+}
+
+@media only screen and (max-width: 1280px) {
     .mobile_controlls {
         display: flex;
     }
@@ -198,6 +218,7 @@ a {
     .input-container {
         display: none !important;
     }
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -209,6 +230,14 @@ a {
     }
 }
 
+@media(max-height: 400px){
+    #inGameSounds{
+    font-size: 14px;   
+    width:120px;
+    height:50px;
+}
+}
+
 .mobile-screen {
     position: relative;
     background-color: black;
@@ -216,6 +245,7 @@ a {
     width: 100vw;
     display: flex;
     justify-content: center;
+    z-index: 999;
 }
 
 .mobile-screen-container {

@@ -6,21 +6,53 @@
   <title>Impressum – El Pollo Loco</title>
   <style>
     body {
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      background-image: url(./img/5_background/second_half_background.png);
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
       font-family: Arial, sans-serif;
       padding: 2rem;
       max-width: 800px;
-      margin: auto;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
       line-height: 1.6;
     }
     h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
+      margin-top: 0;
     }
+
+    .contentWrapper{
+      position:relative;
+      text-align: center;
+    }
+    button{
+      width: 150px;
+    height: 40px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    background-color: rgba(155, 89, 14, 0.856);
+    color: rgba(252, 236, 7, 0.8);
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    border: none;
+    cursor:pointer;
+    }
+    
   </style>
 </head>
 <body>
-
-  <h1>Impressum</h1>
+<div class="contentWrapper">
+  <h1>Impressum</h1>  <a class="button" href="index.html"><button>Go Back</button></a>
 
   <p><strong>Angaben gemäß § 5 TMG:</strong></p>
   <p>
@@ -49,6 +81,6 @@
     </a><br>
     Unsere E-Mail-Adresse finden Sie oben im Impressum.
   </p>
-
+</div>
 </body>
 </html>

@@ -52,7 +52,7 @@
         <button id="music1" class="btn" onclick="music1(); setMusicButton()">Music on</button>        
         <button id="infoBtn" class="btn" onclick="info()">INFO</button>
          <div class="imprint">
-            <a href="imprint.html">Imprint</a>
+            <a href="imprint.html" class="imprintTag">Imprint</a>
         </div>
        
         <button id="btn" class="btn" onclick="init(), screensize()">START</button>
@@ -73,6 +73,7 @@
 
     <canvas class="d-none fullscreen" width="720" height="480" id="canvas">
     </canvas>
+    <button id="inGameSounds" class="btn" onclick="toggleSound()">🔊 Mute Sounds</button> 
 
     <div id="left" class="mobile_controlls d-none" ontouchstart="touchDownLeft()" ontouchend="touchUpLeft()">
         <img src="./img/arrow_left.png"> </div>

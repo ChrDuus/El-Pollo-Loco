@@ -1,3 +1,6 @@
+
+  
+
 class World {
     character = new Character();
     level = level1;
@@ -5,16 +8,15 @@ class World {
     ctx;
     keyboard;
     camera_X = 0;
-    soundManager = new SoundManager();
     statusbarEnergy = new StatusbarEnergy();
     statusbarBottles = new StatusbarBottles();
     statusbarCoins = new StatusbarCoins();
     throwableObjects = [];
     bottle = new Bottle();
-    bottleSound = new Audio('audio/bottle.mp3');
-    hitChickenSound = new Audio('audio/chicken.mp3');
-    hitEndbossSound = new Audio('audio/endboss_hit.mp3');
-    coinSound = new Audio('audio/coin.mp3');
+    bottleSound = window.soundManager.load('bottle','audio/bottle.mp3');
+    hitChickenSound = window.soundManager.load('chickenHit','audio/chicken.mp3');
+    hitEndbossSound = window.soundManager.load('endbossHit','audio/endboss_hit.mp3');
+    coinSound = window.soundManager.load('coin','audio/coin.mp3');
     
 
     constructor(canvas) {
@@ -63,21 +65,28 @@ class World {
       if  bottle hits  endboss
      */
     checkCollisionBottleAndEndboss() {
-        this.hitEndbossSound.volume = 0.75;
         this.throwableObjects.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(bottle)) {
                     endboss.endbossHurt();
-                    this.hitEndbossSound.play()
+                    this.playSound('endbossHit', 0.75)
                 }
                 if (endboss.isDead()) {
                     endboss.endbossDies();
                     setTimeout(() => {
                         this.level.endboss.splice(this.level.endboss.indexOf(endboss), 1);
-                    }, 943);
+                    }, 1500);
                 }
             });
         });
+    }
+
+    playSound(name, vol){
+        if(soundManager.muted == false){
+            window.soundManager.playSoundEffect(name, vol)
+        }else{
+            return
+        }
     }
 
 
@@ -85,12 +94,11 @@ class World {
         if  bottle hits enemy
      */
     checkCollisionBottleAndEnemy() {
-        this.hitChickenSound.volume = 0.65;
         this.throwableObjects.forEach((bottle) => {
             this.level.enemies.forEach((enemy) => {
                 if (enemy.isColliding(bottle)) {
                     enemy.kill();
-                    this.hitChickenSound.play();
+                    this.playSound('chickenHit', 0.75)
                 }
             });
         });
@@ -123,15 +131,14 @@ class World {
         if the character colides with  bottle and add it to statusbar
      */
     checkCollisionWithBottle() {
-        this.bottleSound.volume = 0.65;
         this.level.bottles.forEach((bottle) => {
             if (this.character.isColliding(bottle)) {
                 this.statusbarBottles.amount++;
                 this.statusbarBottles.setAmount();
                 this.level.bottles.splice(this.level.bottles.indexOf(bottle), 1);
 
-                this.bottleSound.play();
-            }
+                this.playSound('bottle', 0.75)
+                        }
         });
     }
 
@@ -140,14 +147,13 @@ class World {
         if the character colides coin add it to statusbar
      */
     checkCollisionWithCoin() {
-        this.coinSound.volume = 0.65;
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
                 this.statusbarCoins.amount++;
                 this.statusbarCoins.setAmount();
                 this.level.coins.splice(this.level.coins.indexOf(coin), 1);
-                this.coinSound.play();
-            }
+                this.playSound('coin', 0.75) 
+                       }
         });
     }
 
@@ -157,12 +163,11 @@ class World {
         If  character on enemy, kill enemy.
      */
     checkCollisionsWithEnemy() {
-        this.hitChickenSound.volume = 0.65;
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 enemy.kill();
-                this.hitChickenSound.play();
-            }
+                this.playSound('chickenHit', 0.75)
+                        }
             if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.hit();
                 this.statusbarEnergy.setPercentage(this.character.energy);

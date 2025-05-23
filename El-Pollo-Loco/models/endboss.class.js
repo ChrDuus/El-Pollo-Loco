@@ -120,6 +120,4 @@ function clearAllIntervals() {
   }
 }
 
-function stopSounds(){
-  this.character.walkingSound= ''
-}
+
