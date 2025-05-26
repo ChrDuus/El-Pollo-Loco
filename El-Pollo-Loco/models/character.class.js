@@ -48,7 +48,10 @@ class Character extends MovableObject {
     "./img/2_character_pepe/1_idle/idle/I-7.png",
     "./img/2_character_pepe/1_idle/idle/I-8.png",
     "./img/2_character_pepe/1_idle/idle/I-9.png",
-    "./img/2_character_pepe/1_idle/idle/I-10.png",
+    "./img/2_character_pepe/1_idle/idle/I-10.png"
+  ];
+  IMAGES_LONGIDLE = [
+    
     "./img/2_character_pepe/1_idle/long_idle/I-11.png",
     "./img/2_character_pepe/1_idle/long_idle/I-12.png",
     "./img/2_character_pepe/1_idle/long_idle/I-13.png",
@@ -59,11 +62,10 @@ class Character extends MovableObject {
     "./img/2_character_pepe/1_idle/long_idle/I-18.png",
     "./img/2_character_pepe/1_idle/long_idle/I-19.png",
     "./img/2_character_pepe/1_idle/long_idle/I-20.png",
-  ];
-
+  ]
+lastJumpTime = 0
   world;
   speed = 4.5;
-  // soundManager = new SoundManager()
   walkingSound = window.soundManager.load('walking', 'audio/pepe_runing.mp3')
   hitSound = window.soundManager.load('hit','audio/hit.mp3')
   jumpSound = window.soundManager.load('jump','audio/jump.mp3')
@@ -104,12 +106,15 @@ class Character extends MovableObject {
       window.soundManager.playSoundEffect('hit', 0.65)
     } else if (this.isAboveGround()) {
       this.playAnimation(this.IMAGES_JUMPING);
-     window.soundManager.playSoundEffect('jump', 0.65)
+    
     } else if (this.world.keyboard.D || this.world.keyboard.A) {
       this.playAnimation(this.IMAGES_WALKING);
     } else if (this.isHurt()) {
       this.playAnimation(this.IMAGES_IDLE);
-    }else{
+    }else if(this.isLongIdle()){
+      this.playAnimation(this.IMAGES_LONGIDLE)
+    }
+    else{
       this.playAnimation(this.IMAGES_IDLE)
     }
   }
@@ -132,9 +137,20 @@ class Character extends MovableObject {
 
   if (this.world.keyboard.SPACE && !this.isAboveGround()) {
     this.jump();
+     window.soundManager.playSoundEffect('jump', 0.65)
   }
 
   this.world.camera_X = -this.x + 100;
+}
+
+isKillingJump(enemy) {
+  const now = Date.now();
+  const jumpTimeout = 150;
+  const recentlyJumped = now - this.lastJumpTime <= jumpTimeout;
+  const fallingDown = this.speedY < 0;
+  const hitsFromAbove = this.y + this.height <= enemy.y + 10;
+
+  return recentlyJumped && fallingDown && hitsFromAbove;
 }
 
 
@@ -165,7 +181,8 @@ characterWalkesLeft() {
   }
 
   jump() {
-    this.speedY = 30;
+    this.speedY = 20;
+     this.lastJumpTime = Date.now();
   }
 
   stopWalkingSound() {

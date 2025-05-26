@@ -4,6 +4,10 @@ class Endboss extends MovableObject {
   y = 10;
   energy = 110;
   contactWithCharacter = false;
+  isWalking = false;
+  isDying = false;
+isDead = false;
+isHurt = false;
 
   IMAGES_ANGRY = [
     "./img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -58,19 +62,22 @@ class Endboss extends MovableObject {
   }
 
   endbossHurt() {
-    this.energy -= 10;
-    if (this.energy < 0) {
-      this.energy = 0;
-    }
-    let intervallId = setInterval(() => {
-      this.playAnimation(this.IMAGES_HURTING);
-    }, 410);
-    setTimeout(() => {
-      clearInterval(intervallId);
-    }, 1000);
-  }
+  if (this.isDead || this.isDying) return; 
+
+  this.energy -= 40;
+  if (this.energy < 0) this.energy = 0;
+
+  this.isHurt = true;
+  this.playAnimation(this.IMAGES_HURTING);
+
+  setTimeout(() => {
+    this.isHurt = false;
+  }, 300);
+}
+
 
   showEndScreen() {
+    
     setTimeout(() => {
       document.getElementById("canvas").classList.add("d-none");
       document.getElementById("endScreen").classList.remove("d-none");
@@ -82,18 +89,21 @@ class Endboss extends MovableObject {
   }
 
   endbossDies() {
-    let intervallId = setInterval(() => {
-      this.playAnimation(this.IMAGES_DEAD);
-    }, 100);
+  if (this.isDead || this.isDying) return;
 
-    setTimeout(() => {
-      clearInterval(intervallId);
-      clearAllIntervals()      
-      document.getElementById("canvas").classList.add("d-none");
-      document.getElementById("startScreen").classList.add("d-none");
-      document.getElementById("endScreenWon").classList.remove("d-none");
-    }, 1200);
-  }
+  this.isDying = true;
+  this.playAnimation(this.IMAGES_DEAD);
+
+  setTimeout(() => {
+    this.isDead = true;
+    this.isDying = false;
+     
+    document.getElementById("canvas").classList.add("d-none");
+    document.getElementById("startScreen").classList.add("d-none");
+    document.getElementById("endScreenWon").classList.remove("d-none");
+  }, 1200);
+}
+
 
   endbossMoveLeft() {
     setInterval(() => {
@@ -102,17 +112,22 @@ class Endboss extends MovableObject {
   }
 
   animate() {
-    setInterval(() => {
-      if (this.isHit == false) {
-        this.playAnimation(this.IMAGES_ANGRY);
-      }
-      if (this.contactWithCharacter == true) {
-        this.playAnimation(this.IMAGES_WALKING);
+  setInterval(() => {
+    if (this.isDead || this.isDying || this.isHurt) return;
+
+    if (this.contactWithCharacter) {
+      this.playAnimation(this.IMAGES_WALKING);
+
+      if (!this.isWalking) {
+        this.isWalking = true;
         this.endbossMoveLeft();
       }
-    }, 360);
-  }
-}
+    } else {
+      this.playAnimation(this.IMAGES_ANGRY);
+    }
+  }, 360);
+}}
+
 
 function clearAllIntervals() {
   for (let i = 1; i < 99999; i++) {

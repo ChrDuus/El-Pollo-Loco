@@ -8,6 +8,7 @@ class World {
     ctx;
     keyboard;
     camera_X = 0;
+    
     statusbarEnergy = new StatusbarEnergy();
     statusbarBottles = new StatusbarBottles();
     statusbarCoins = new StatusbarCoins();
@@ -17,7 +18,7 @@ class World {
     hitChickenSound = window.soundManager.load('chickenHit','audio/chicken.mp3');
     hitEndbossSound = window.soundManager.load('endbossHit','audio/endboss_hit.mp3');
     coinSound = window.soundManager.load('coin','audio/coin.mp3');
-    
+    statusbarBoss = new StatusbarBoss();
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -60,19 +61,22 @@ class World {
         }, 2800)
     }
 
-
     /**
       if  bottle hits  endboss
      */
     checkCollisionBottleAndEndboss() {
         this.throwableObjects.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
-                if (endboss.isColliding(bottle)) {
+                if (endboss.isColliding(bottle) && !endboss.isDead && !endboss.isDying) {
                     endboss.endbossHurt();
-                    this.playSound('endbossHit', 0.75)
+                    this.statusbarBoss.setHealth(endboss.energy);
+                    
+                    
+
+                    window.soundManager.playSoundEffect('chickenHit', 0.75)
                 }
-                if (endboss.isDead()) {
-                    endboss.endbossDies();
+                if (endboss.energy <= 0) {
+                    // endboss.endbossDies();
                     setTimeout(() => {
                         this.level.endboss.splice(this.level.endboss.indexOf(endboss), 1);
                     }, 1500);
@@ -98,11 +102,16 @@ class World {
             this.level.enemies.forEach((enemy) => {
                 if (enemy.isColliding(bottle)) {
                     enemy.kill();
-                    this.playSound('chickenHit', 0.75)
+                    window.soundManager.playSoundEffect('chickenHit', 0.75)
                 }
             });
         });
     }
+
+    setHealth(health) {
+    this.health = health;
+    this.setAmount(); 
+}
 
 
     /**
@@ -204,12 +213,17 @@ class World {
     }
 
     checkIfGameIsOver(){
-        if(this.character.energy == 0 ){
-            
-        }else {
-        return
-        }
+    if(this.character.energy == 0 ){
+        this.character.characterDies();
+    } else {
+        this.level.endboss.forEach(endboss => {
+            if (endboss.energy <= 0 && !endboss.isDead) {
+                endboss.endbossDies();
+            }
+        });
     }
+}
+
 
 
   
@@ -221,6 +235,7 @@ class World {
         this.addToMap(this.statusbarEnergy);
         this.addToMap(this.statusbarBottles);
         this.addToMap(this.statusbarCoins);
+        this.addToMap(this.statusbarBoss);
         this.ctx.translate(this.camera_X, 0);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);

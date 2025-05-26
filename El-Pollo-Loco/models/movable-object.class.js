@@ -65,6 +65,11 @@ class MovableObject extends DrawableObject {
         return timePassed > 2000;
     }
 
+    isLongIdle(){        
+        let timePassed = new Date().getTime() - this.world.keyboard.lastMove;
+        return timePassed > 7000;
+    }
+
 
     /**
          character or enemy is dead or not.
@@ -91,8 +96,8 @@ class MovableObject extends DrawableObject {
      that a object is above a special  y axis or not and the high of the bottle. 
      */
     isAboveGround() {
-        if (this instanceof Character) {
-            return this.y < 175;
+        if (this instanceof Character) {                                               
+            return this.y < 170 && this.speedY <= 0
         } else if (this instanceof ThrowableObject) {
             return this.y < 375;
         }
