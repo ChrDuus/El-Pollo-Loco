@@ -1,8 +1,11 @@
 let level1;
 
+/**
+ * Initializes the game level with all game objects.
+ * Creates enemies, clouds, background objects, collectibles and the endboss.
+ */
 function initlevel() {
     level1 = new Level(
-
         [
             new Chicken(),
             new Chicken(),
@@ -16,9 +19,11 @@ function initlevel() {
             new Chick(),
             new Chick(),
             new Chick(),
-        ], [
+        ], 
+        [
             new Cloud()
-        ], [
+        ], 
+        [
             new BackgroundObject('./img/5_background/layers/air.png', -719, 0),
             new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', -719, 0),
             new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', -719, 0),
@@ -43,20 +48,23 @@ function initlevel() {
             new BackgroundObject('./img/5_background/layers/3_third_layer/2.png', 719 * 3, 0),
             new BackgroundObject('./img/5_background/layers/2_second_layer/2.png', 719 * 3, 0),
             new BackgroundObject('./img/5_background/layers/1_first_layer/2.png', 719 * 3, 0),
-        ], [
+        ], 
+        [
             new Bottle(),
             new Bottle(),
             new Bottle(),
             new Bottle(),
             new Bottle()
-        ], [
+        ], 
+        [
             new Coin(),
             new Coin(),
             new Coin(),
             new Coin()
-        ], [
+        ], 
+        [
             new Endboss()
-        ],
-
+        ]
     );
+
 }

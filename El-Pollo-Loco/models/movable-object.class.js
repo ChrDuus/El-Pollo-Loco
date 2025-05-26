@@ -1,34 +1,53 @@
+/**
+ * Represents a drawable object that can move, be affected by gravity, and interact with other objects.
+ * Extends {@link DrawableObject}.
+ */
 class MovableObject extends DrawableObject {
+    /** @type {number} Horizontal movement speed */
     speed = 0.15;
+
+    /** @type {number} Character-specific movement speed */
     speedCharacter = 0.3;
+
+    /** @type {boolean} Whether the object is facing left */
     otherDirection = false;
+
+    /** @type {number} Vertical movement speed */
     speedY = 0;
+
+    /** @type {number} Gravity acceleration value */
     acceleration = 3.5;
+
+    /** @type {number} Energy/health of the object */
     energy = 100;
+
+    /** @type {number} Timestamp of the last hit */
     lastHit = 0;
 
-
     /**
-     to draw the images on the canvas
+     * Draws the object on the canvas.
+     * @param {CanvasRenderingContext2D} ctx - The canvas context to draw on
      */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-
-
     /**
-     if is colliding with enemy
+     * Checks whether this object is colliding with another.
+     * @param {MovableObject} mo - The other object
+     * @returns {boolean}
      */
     isColliding(mo) {
-        return (this.x + this.width - this.offsetRight) >= (mo.x + mo.offsetLeft) && (this.x - this.offsetLeft) <= (mo.x + mo.width - mo.offsetRight) &&
-            (this.y + this.height - this.offsetBottom) >= (mo.y + mo.offsetTop) &&
-            (this.y + this.offsetTop) <= (mo.y + mo.height - mo.offsetBottom);
+        return (
+            this.x + this.width - this.offsetRight >= mo.x + mo.offsetLeft &&
+            this.x - this.offsetLeft <= mo.x + mo.width - mo.offsetRight &&
+            this.y + this.height - this.offsetBottom >= mo.y + mo.offsetTop &&
+            this.y + this.offsetTop <= mo.y + mo.height - mo.offsetBottom
+        );
     }
 
-
     /**
-       if  character is hit.
+     * Reduces the object's energy by 1 and updates hit timestamp.
      */
     hit() {
         this.energy -= 1;
@@ -39,48 +58,47 @@ class MovableObject extends DrawableObject {
         }
     }
 
-
     /**
-        set the energy of an enemy to 0.
+     * Sets the object's energy to zero.
      */
     kill() {
         this.energy = 0;
     }
 
-
     /**
-      is hurt or not.
+     * Checks whether the object has been hurt recently.
+     * @returns {boolean}
      */
     isHurt() {
-        let timePassed = new Date().getTime() - this.lastHit;
-        timePassed = timePassed / 1000;
-        return timePassed < 1;
+        return (new Date().getTime() - this.lastHit) / 1000 < 1;
     }
 
     /**
-       is idle or not.
+     * Checks whether the character has been idle for more than 2 seconds.
+     * @returns {boolean}
      */
     isIdle() {
-        let timePassed = new Date().getTime() - this.world.keyboard.lastMove;
-        return timePassed > 2000;
+        return new Date().getTime() - this.world.keyboard.lastMove > 2000;
     }
-
-    isLongIdle(){        
-        let timePassed = new Date().getTime() - this.world.keyboard.lastMove;
-        return timePassed > 7000;
-    }
-
 
     /**
-         character or enemy is dead or not.
+     * Checks whether the character has been idle for more than 7 seconds.
+     * @returns {boolean}
+     */
+    isLongIdle() {
+        return new Date().getTime() - this.world.keyboard.lastMove > 7000;
+    }
+
+    /**
+     * Checks whether the object is considered dead (energy = 0).
+     * @returns {boolean}
      */
     isDead() {
-        return this.energy == 0;
+        return this.energy === 0;
     }
 
-
     /**
-        aply gravity to object.
+     * Applies gravity to the object by updating its Y position at intervals.
      */
     applyGravity() {
         setInterval(() => {
@@ -91,59 +109,61 @@ class MovableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
-
     /**
-     that a object is above a special  y axis or not and the high of the bottle. 
+     * Determines whether the object is above the ground.
+     * @returns {boolean}
      */
     isAboveGround() {
-        if (this instanceof Character) {                                               
-            return this.y < 170 && this.speedY <= 0
+        if (this instanceof Character) {
+            return this.y < 170 && this.speedY <= 0;
         } else if (this instanceof ThrowableObject) {
             return this.y < 375;
         }
+        return false;
     }
 
     /**
-    load a single image.
+     * Loads a single image for the object.
+     * @param {string} path - Path to the image
      */
     loadImage(path) {
-        this.img = new Image(); // this.img = document.getElementById(..) <img id=".." src="..">
+        this.img = new Image();
         this.img.src = path;
     }
 
-
     /**
-     load  array of images.
+     * Loads multiple images into the image cache.
+     * @param {string[]} arr - Array of image paths
      */
     loadImages(arr) {
         arr.forEach((path) => {
-            let img = new Image();
+            const img = new Image();
             img.src = path;
             this.imageCache[path] = img;
         });
     }
 
-
     /**
-     play a animation of images in a intervall.
+     * Plays a looping animation from the given image array.
+     * @param {string[]} images - Array of image paths
      */
     playAnimation(images) {
-        let i = this.currentImage % images.length;
-        let path = images[i];
+        const i = this.currentImage % images.length;
+        const path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
     }
 
-
     /**
-    move left
+     * Moves the object to the left.
      */
     moveLeft() {
         this.x -= this.speed;
     }
 
-
-    
+    /**
+     * Moves the object to the right.
+     */
     moveRight() {
         this.x += this.speed;
     }

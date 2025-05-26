@@ -3,11 +3,12 @@ let world;
 let keyboard = new Keyboard();
 let playMusic1 = new Audio('audio/music1.mp3');
 let musicOn = false;
-let soundIsMuted = false
-let soundManager = new SoundManager()
+let soundIsMuted = false;
+let soundManager = new SoundManager();
 
-
-
+/**
+ * Checks the device orientation and adjusts canvas height accordingly.
+ */
 function checkOrientation() {
     if (window.matchMedia("(orientation: landscape)").matches) {
         if (window.innerHeight < 480) {
@@ -19,8 +20,9 @@ function checkOrientation() {
     }
 }
 
-
-
+/**
+ * Initializes the game by setting up canvas, level and world.
+ */
 function init() {
     canvas = document.getElementById('canvas');
     initlevel();
@@ -28,6 +30,9 @@ function init() {
     start();
 }
 
+/**
+ * Adjusts the screen size based on user selection.
+ */
 function screensize() {
     let rd1 = document.getElementById('rd1');
     let rd2 = document.getElementById('rd2');
@@ -36,17 +41,15 @@ function screensize() {
         document.getElementById('canvas').classList.add('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
         document.getElementById('bg').classList.remove('bg-game');
-
     } else if (rd2.checked == true) {
         document.getElementById('canvas').classList.remove('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
-
     }
-
 }
 
-
-
+/**
+ * Starts the game by hiding start screen and showing game elements.
+ */
 function start() {
     document.getElementById('startScreen').classList.add('d-none');
     document.getElementById('btn').classList.add('d-none');
@@ -55,16 +58,19 @@ function start() {
     document.getElementById('right').classList.remove('d-none');
     document.getElementById('jump').classList.remove('d-none');
     document.getElementById('throw').classList.remove('d-none');
-    window.soundManager.unmuteAll()
+    window.soundManager.unmuteAll();
 }
 
-
-
-
+/**
+ * Toggles the info box visibility.
+ */
 function info() {
     document.getElementById('infoBox').classList.toggle('d-none');
 }
 
+/**
+ * Toggles all sounds on/off.
+ */
 function toggleSound() {
     if (!window.soundManager) return;
 
@@ -91,13 +97,9 @@ window.addEventListener("keydown", (e) => {
     if (e.keyCode == 32) {
         keyboard.SPACE = true;
     }
-   
 });
 
-
-
 window.addEventListener("keyup", (e) => {
-
     if (e.keyCode == 68) {
         keyboard.D = false;
     }
@@ -110,48 +112,75 @@ window.addEventListener("keyup", (e) => {
     if (e.keyCode == 32) {
         keyboard.SPACE = false;
     }
-    
 });
 
-
+/**
+ * Handles left touch button press.
+ */
 function touchDownLeft() {
     keyboard.A = true;
 }
 
+/**
+ * Handles left touch button release.
+ */
 function touchUpLeft() {
     keyboard.A = false;
 }
 
+/**
+ * Handles right touch button press.
+ */
 function touchDownRight() {
     keyboard.D = true;
 }
 
+/**
+ * Handles right touch button release.
+ */
 function touchUpRight() {
     keyboard.D = false;
 }
 
+/**
+ * Handles throw button press.
+ */
 function touchDownThrow() {
     keyboard.E = true;
 }
 
+/**
+ * Handles throw button release.
+ */
 function touchUpThrow() {
     keyboard.E = false;
 }
 
-function touchDownJump(){
+/**
+ * Handles jump button press.
+ */
+function touchDownJump() {
     keyboard.SPACE = true;
 }
-function touchUpJump(){
-    keyboard.SPACE = false
+
+/**
+ * Handles jump button release.
+ */
+function touchUpJump() {
+    keyboard.SPACE = false;
 }
 
+/**
+ * Toggles background music on/off.
+ */
 function music1() {
-    musicOn = !musicOn
+    musicOn = !musicOn;
     playMusicFunction1();
 }
 
-
-
+/**
+ * Plays or pauses background music based on current state.
+ */
 function playMusicFunction1() {
     if (musicOn == true) {
         playMusic1.play();
@@ -161,13 +190,14 @@ function playMusicFunction1() {
     }
 }
 
-
-
-function setMusicButton(){
+/**
+ * Updates the music button text based on current state.
+ */
+function setMusicButton() {
     let button = document.getElementById('music1');
-    if(musicOn== false){
-        button.innerText = 'Music On'
-    }else{
-        button.innerText= 'Music Off'
+    if (musicOn == false) {
+        button.innerText = 'Music On';
+    } else {
+        button.innerText = 'Music Off';
     }
 }
