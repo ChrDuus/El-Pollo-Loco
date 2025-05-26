@@ -98,14 +98,19 @@ class MovableObject extends DrawableObject {
     }
 
     /**
-     * Applies gravity to the object by updating its Y position at intervals.
+     * Applies gravity to the object by updating its Y position at intervals. Making sure Character is not going above 180
      */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
-            }
+            }if (this instanceof Character) {
+                if(this.y >= 180){
+                    this.y = 180                    
+                }
+            };
+            
         }, 1000 / 25);
     }
 

@@ -202,9 +202,11 @@ class Character extends MovableObject {
      * Makes the character jump.
      */
     jump() {
-        this.speedY = 20;
+      if(this.speedY <= 0){
+        this.speedY = 30;
         this.lastJumpTime = Date.now();
     }
+  }
 
     /**
      * Stops the walking sound effect.
