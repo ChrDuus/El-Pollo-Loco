@@ -55,6 +55,7 @@ function start() {
     document.getElementById('right').classList.remove('d-none');
     document.getElementById('jump').classList.remove('d-none');
     document.getElementById('throw').classList.remove('d-none');
+    window.soundManager.unmuteAll()
 }
 
 

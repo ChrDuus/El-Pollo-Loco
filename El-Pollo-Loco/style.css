@@ -17,6 +17,7 @@ canvas {
     z-index: 5;
     border-radius: 20px;
     box-shadow: 5px 5px 13px 9px #4d4d4d;
+    max-width: 1980px;
 }
 
 .fullscreen {
@@ -41,6 +42,9 @@ canvas {
     width: 100%;
     height: 100vh;
     z-index: 5;
+    max-width: 1980px;
+    
+    
 }
 
 .btn {
@@ -220,6 +224,33 @@ a {
 
 }
 
+@media(max-height: 800px){
+    
+#infoBox{
+top: 70%;
+left: 40%;
+transform:translateY(-80%);
+background-color: transparent;
+padding: 0;
+height: 90%;
+flex-wrap: wrap;
+
+
+}
+.innerInfoBox{
+    padding: 0 20px;
+    background-color: rgba(231, 141, 6, 0.911);
+    border-radius: 10px;
+    flex-wrap: wrap;
+   
+    
+}
+.innerInfoBox p {
+    margin: 4px;
+}
+
+}
+
 @media only screen and (max-width: 600px) {
     .start_end_screen {
         display: none;
@@ -234,6 +265,12 @@ a {
     font-size: 14px;   
     width:120px;
     height:50px;
+}
+
+.btn{
+    width: 100px;
+    height: 40px;
+    font-size: 16px;
 }
 }
 

@@ -58,7 +58,7 @@ class World {
         setInterval(() => {
             this.checkCollisionBottleAndEndboss();
             this.checkCharacterIsNearToEndboss();
-        }, 2800)
+        }, 280)
     }
 
     /**
@@ -68,15 +68,16 @@ class World {
         this.throwableObjects.forEach((bottle) => {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.isColliding(bottle) && !endboss.isDead && !endboss.isDying) {
+                   
                     endboss.endbossHurt();
                     this.statusbarBoss.setHealth(endboss.energy);
                     
                     
 
                     window.soundManager.playSoundEffect('chickenHit', 0.75)
+                    this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
                 }
                 if (endboss.energy <= 0) {
-                    // endboss.endbossDies();
                     setTimeout(() => {
                         this.level.endboss.splice(this.level.endboss.indexOf(endboss), 1);
                     }, 1500);
@@ -215,10 +216,12 @@ class World {
     checkIfGameIsOver(){
     if(this.character.energy == 0 ){
         this.character.characterDies();
+        window.soundManager.muteAll()
     } else {
         this.level.endboss.forEach(endboss => {
-            if (endboss.energy <= 0 && !endboss.isDead) {
+            if (endboss.energy <= 0 ) {
                 endboss.endbossDies();
+                window.soundManager.muteAll()
             }
         });
     }
@@ -295,6 +298,6 @@ class World {
      */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
-        this.ctx.restore();
+                this.ctx.restore();
     }
 }

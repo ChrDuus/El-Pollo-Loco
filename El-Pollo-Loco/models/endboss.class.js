@@ -62,10 +62,12 @@ isHurt = false;
   }
 
   endbossHurt() {
+    console.log('EnbossHurt läuft!');
   if (this.isDead || this.isDying) return; 
 
-  this.energy -= 40;
-  if (this.energy < 0) this.energy = 0;
+  this.energy = this.energy - 40;
+  console.log('Neue Energy:', this.energy)
+  
 
   this.isHurt = true;
   this.playAnimation(this.IMAGES_HURTING);

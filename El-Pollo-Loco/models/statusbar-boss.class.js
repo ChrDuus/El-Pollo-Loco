@@ -5,7 +5,7 @@ IMAGES = [
     './img/7_statusbars/2_statusbar_endboss/orange.png'
 ]
 
-health = 99;
+health = 110;
 
 constructor(){
     super()    
@@ -24,9 +24,9 @@ setAmount() {
     }
 
  resolveImageIndex() {
-    if (this.health > 66) {
+    if (this.health >= 70) {
         return 0; 
-    } else if (this.health > 33) {
+    } else if (this.health >= 30) {
         return 1; 
     } else {
         return 2; 
