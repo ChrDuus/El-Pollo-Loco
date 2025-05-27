@@ -386,7 +386,7 @@ flex-wrap: wrap;
 
     #inGameSounds{
         top: 8%;
-        right: 29%;
+        right: 27%;
         width: 200px;
         height: 80px;
         font-size: 30px;
@@ -395,6 +395,7 @@ flex-wrap: wrap;
     .input-container{
         top: 30%;
         font-size: 36px;
+        right: 10%;
     }
     #music1{
             top: 12%;
@@ -403,7 +404,9 @@ flex-wrap: wrap;
 
     #infoBox{
         top: 20%;
+        left: 49%;
         font-size: 25px;
+        z-index: 11;
     }
     .imprint{
         position:absolute;
