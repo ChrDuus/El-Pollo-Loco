@@ -11,9 +11,7 @@ let currentlyIngame = false
 /**
  * Checks the device orientation and adjusts canvas height accordingly.
  */
-function checkOrientation() {        
-    
-    
+function checkOrientation() {      
     if (window.matchMedia("(orientation: landscape)").matches) {
         if (window.innerHeight < 480) {
             newHeight = window.innerHeight;
@@ -21,19 +19,15 @@ function checkOrientation() {
             document.getElementById('canvas').classList.remove('d-none')
         }
     } else {
-        if(world && this.currentlyIngame === true){
-        console.log(world.currentlyIngame);
-        
-        document.getElementById('canvas').classList.add('d-none')
-    }
+        if(world && this.currentlyIngame === true){        
+        document.getElementById('canvas').classList.add('d-none')    }
         document.getElementById('canvas').style.height = `100%`;
     }
 }
+
 window.addEventListener('orientationchange', () => {
-    console.log('Orientation changed!');
     checkOrientation();
-    checkMobileScreen()
-    
+    checkMobileScreen()    
 });
 
 window.addEventListener('resize', () => {
@@ -61,13 +55,11 @@ function screensize() {
 
     if (rd1.checked) {
         localStorage.setItem('screenMode', 'FULL');
-
         document.getElementById('canvas').classList.add('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
         document.getElementById('bg').classList.remove('bg-game');
     } else if (rd2.checked) {
         localStorage.setItem('screenMode', 'SMALL');
-
         document.getElementById('canvas').classList.remove('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
          document.getElementById('bg').classList.add('bg-game');
@@ -110,14 +102,8 @@ function start() {
     document.getElementById('throw').classList.remove('d-none');
     document.getElementById('fullscreenBtn').classList.remove('d-none');
     window.soundManager.unmuteAll();    
-    this.currentlyIngame = true
-    
-    
-    
-    
+    this.currentlyIngame = true    
 }
-
-
 
 /**
  * Toggles the info box visibility.
@@ -285,8 +271,12 @@ function checkMobileScreen() {
 
     if (isTouchDevice && isPortrait) {
         mobileScreen.classList.remove('d-none');
+        document.getElementById('canvas').classList.add('d-none')
+
     } else {
         mobileScreen.classList.add('d-none');
+        document.getElementById('canvas').classList.remove('d-none')
+
     }
 }
 

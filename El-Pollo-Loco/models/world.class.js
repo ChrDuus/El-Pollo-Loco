@@ -30,8 +30,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.run();
-        
+        this.run();        
     }
 
     /**
@@ -49,7 +48,6 @@ class World {
             this.checkCollisionsWithEnemy();
             this.checkCollisionBottleAndEnemy();
         }, 50);
-
         setInterval(() => {
             this.checkCollisionsWithEndboss();
             this.checkCollisionWithBottle();
@@ -58,7 +56,6 @@ class World {
             this.checkTrowableObjects();
             this.checkIfGameIsOver();
         }, 150);
-
         setInterval(() => {
             this.checkCollisionBottleAndEndboss();
             this.checkCharacterIsNearToEndboss();
@@ -74,13 +71,9 @@ class World {
                 if (endboss.isColliding(bottle) && !endboss.isDead && !endboss.isDying) {
                     endboss.endbossHurt();
                     this.statusbarBoss.setHealth(endboss.energy);
-
                     window.soundManager.playSoundEffect('chickenHit', 0.75);
-
                     this.throwableObjects.splice(this.throwableObjects.indexOf(bottle), 1);
-                }
-
-                if (endboss.energy <= 0) {
+                } if (endboss.energy <= 0) {
                     setTimeout(() => {
                         this.level.endboss.splice(this.level.endboss.indexOf(endboss), 1);
                     }, 1500);
@@ -126,12 +119,10 @@ class World {
                 this.throwableObjects.push(bottle);
                 this.checkCollisionBottleAndEnemy();
             }
-
             if (this.character.otherDirection === false) {
                 let bottle = new ThrowableObject(this.character.x + this.character.width, this.character.y + this.character.height / 2);
                 this.throwableObjects.push(bottle);
             }
-
             this.statusbarBottles.setAmount();
             this.checkCollisionBottleAndEnemy();
         }
