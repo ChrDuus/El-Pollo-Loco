@@ -5,20 +5,42 @@ let playMusic1 = new Audio('audio/music1.mp3');
 let musicOn = false;
 let soundIsMuted = false;
 let soundManager = new SoundManager();
+let currentlyIngame = false
+
 
 /**
  * Checks the device orientation and adjusts canvas height accordingly.
  */
-function checkOrientation() {
+function checkOrientation() {        
+    
+    
     if (window.matchMedia("(orientation: landscape)").matches) {
         if (window.innerHeight < 480) {
             newHeight = window.innerHeight;
             document.getElementById('canvas').style.height = `${newHeight}px`;
+            document.getElementById('canvas').classList.remove('d-none')
         }
     } else {
+        if(world && this.currentlyIngame === true){
+        console.log(world.currentlyIngame);
+        
+        document.getElementById('canvas').classList.add('d-none')
+    }
         document.getElementById('canvas').style.height = `100%`;
     }
 }
+window.addEventListener('orientationchange', () => {
+    console.log('Orientation changed!');
+    checkOrientation();
+    checkMobileScreen()
+    
+});
+
+window.addEventListener('resize', () => {
+    checkOrientation();
+    checkMobileScreen()
+    handleMobileScreen();
+});
 
 /**
  * Initializes the game by setting up canvas, level and world.
@@ -26,26 +48,54 @@ function checkOrientation() {
 function init() {
     canvas = document.getElementById('canvas');
     initlevel();
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, true);
     start();
 }
 
 /**
- * Adjusts the screen size based on user selection.
+ * Adjusts the screen size based on user selection and safe it to local Storage.
  */
 function screensize() {
     let rd1 = document.getElementById('rd1');
     let rd2 = document.getElementById('rd2');
 
-    if (rd1.checked == true) {
+    if (rd1.checked) {
+        localStorage.setItem('screenMode', 'FULL');
+
         document.getElementById('canvas').classList.add('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
         document.getElementById('bg').classList.remove('bg-game');
-    } else if (rd2.checked == true) {
+    } else if (rd2.checked) {
+        localStorage.setItem('screenMode', 'SMALL');
+
         document.getElementById('canvas').classList.remove('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
+         document.getElementById('bg').classList.add('bg-game');
     }
 }
+
+/**
+ * Enables or disables Fullscreen mode
+ */
+function toggleFullscreen() {
+    
+    let mode = localStorage.getItem('screenMode');
+    const btn = document.getElementById('fullscreenBtn');
+    let rd1 = document.getElementById('rd1');
+    let rd2 = document.getElementById('rd2');
+
+    if (mode === 'FULL') {
+        localStorage.setItem('screenMode', 'SMALL');
+        btn.innerText = 'Enter Fullscreen';
+        rd2.checked = true
+    } else if (mode === 'SMALL') {
+        localStorage.setItem('screenMode', 'FULL');
+        btn.innerText = 'Exit Fullscreen';
+        rd1.checked = true
+    }
+    screensize();
+}
+
 
 /**
  * Starts the game by hiding start screen and showing game elements.
@@ -58,8 +108,16 @@ function start() {
     document.getElementById('right').classList.remove('d-none');
     document.getElementById('jump').classList.remove('d-none');
     document.getElementById('throw').classList.remove('d-none');
-    window.soundManager.unmuteAll();
+    document.getElementById('fullscreenBtn').classList.remove('d-none');
+    window.soundManager.unmuteAll();    
+    this.currentlyIngame = true
+    
+    
+    
+    
 }
+
+
 
 /**
  * Toggles the info box visibility.
@@ -199,5 +257,51 @@ function setMusicButton() {
         button.innerText = 'Music On';
     } else {
         button.innerText = 'Music Off';
+    }
+}
+
+
+
+window.addEventListener('load', () => {
+    const savedMode = localStorage.getItem('screenMode');
+    if (savedMode === 'FULL') {
+        document.getElementById('rd1').checked = true;
+    } else if (savedMode === 'SMALL') {
+        document.getElementById('rd2').checked = true;
+    }
+
+    screensize(); 
+    handleMobileScreen(); // neu
+});
+
+/**
+ * Check's if the Mobilescreen needs to be shown, or not
+ */
+function checkMobileScreen() {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isPortrait = window.innerHeight > window.innerWidth;
+
+    const mobileScreen = document.getElementById('mobilescreen');
+
+    if (isTouchDevice && isPortrait) {
+        mobileScreen.classList.remove('d-none');
+    } else {
+        mobileScreen.classList.add('d-none');
+    }
+}
+
+/**
+ * Handles display of mobile Screen
+ */
+function handleMobileScreen() {
+    const isPortrait = window.innerHeight > window.innerWidth;
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    const mobileScreen = document.getElementById('mobilescreen');
+
+    if (isPortrait && isTouch) {
+        mobileScreen.classList.remove('d-none');
+    } else {
+        mobileScreen.classList.add('d-none');
     }
 }

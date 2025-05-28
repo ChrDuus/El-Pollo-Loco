@@ -13,4 +13,7 @@ class Keyboard {
 
     /** @type {boolean} - True if the 'SPACE' key is pressed */
     SPACE = false;
+
+    /** @type {boolean} - True if the 'ESC' key is pressed */
+    ESC = false;
 }

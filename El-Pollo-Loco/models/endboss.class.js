@@ -65,21 +65,43 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+     /**
+     * Handles animation for the Endboss, depending on status
+     * Reduces energy and plays hurt animation.
+     */
+    setAnimation(images, fps = 12) {
+    if (this.currentAnimation === images) return; 
+
+    this.currentAnimation = images;
+    this.currentImage = 0;
+
+    clearInterval(this.animationInterval); 
+
+    this.animationInterval = setInterval(() => {
+        this.img = this.imageCache[this.currentAnimation[this.currentImage]];
+        this.currentImage = (this.currentImage + 1) % this.currentAnimation.length;
+    }, 1000 / fps);
+    }
+
     /**
      * Handles the hurt logic for the Endboss.
      * Reduces energy and plays hurt animation.
      */
     endbossHurt() {
-        if (this.isDead || this.isDying) return;
+    if (this.isDead || this.isDying || this.isHurt) return;
 
-        this.energy -= 40;
-        this.isHurt = true;
-        this.playAnimation(this.IMAGES_HURTING);
+    this.energy -= 40;
+    this.isHurt = true;
 
-        setTimeout(() => {
-            this.isHurt = false;
-        }, 700);
+    setTimeout(() => {
+        this.isHurt = false;
+    }, 600);
+
+    if (this.energy <= 0) {
+        this.endbossDies();
     }
+}
+
 
     /**
      * Displays the end screen when the player loses.
@@ -88,6 +110,8 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             document.getElementById("canvas").classList.add("d-none");
             document.getElementById("endScreen").classList.remove("d-none");
+            document.getElementById("inGameSounds").classList.add("d-none");
+            document.getElementById("fullscreenBtn").classList.add("d-none");
         }, 1000);
     }
 
@@ -96,25 +120,32 @@ class Endboss extends MovableObject {
      */
     letEndbossWalk() {
         this.contactWithCharacter = true;
+        this.endbossMoveLeft();
     }
 
     /**
      * Handles the death animation and shows win screen after delay.
      */
     endbossDies() {
-        if (this.isDead || this.isDying) return;
+    if (this.isDead || this.isDying) return;
 
-        this.isDying = true;
-        this.playAnimation(this.IMAGES_DEAD);
+    this.isDying = true;
 
-        setTimeout(() => {
-            this.isDead = true;
-            this.isDying = false;
-            document.getElementById("canvas").classList.add("d-none");
-            document.getElementById("startScreen").classList.add("d-none");
-            document.getElementById("endScreenWon").classList.remove("d-none");
-        }, 1200);
-    }
+    setTimeout(() => {
+        this.isDying = false;
+        this.isDead = true;
+
+        clearInterval(this.animationInterval);
+
+        document.getElementById("canvas").classList.add("d-none");
+        document.getElementById("startScreen").classList.add("d-none");
+        document.getElementById("endScreenWon").classList.remove("d-none");
+        document.getElementById("inGameSounds").classList.add("d-none");        
+        document.getElementById("fullscreenBtn").classList.add("d-none");
+    }, 1000);
+}
+
+
 
     /**
      * Continuously moves the Endboss to the left.
@@ -128,29 +159,38 @@ class Endboss extends MovableObject {
     /**
      * Animates the Endboss depending on its state.
      */
-    animate() {
-        setInterval(() => {
-            if (this.isDead || this.isDying || this.isHurt) return;
+ animate() {
+    const animationLoop = () => {
+        if (this.isDead) return;
 
-            if (this.contactWithCharacter) {
-                this.playAnimation(this.IMAGES_WALKING);
+        if (this.isDying) {
+            this.setAnimation(this.IMAGES_DEAD, 10);
+        } else if (this.isHurt) {
+            this.setAnimation(this.IMAGES_HURTING, 10);
+        } else if (this.contactWithCharacter) {
+            this.setAnimation(this.IMAGES_WALKING, 8);
+        } else {
+            this.setAnimation(this.IMAGES_ANGRY, 6);
+        }
 
-                if (!this.isWalking) {
-                    this.isWalking = true;
-                    this.endbossMoveLeft();
-                }
-            } else {
-                this.playAnimation(this.IMAGES_ANGRY);
-            }
-        }, 360);
-    }
+        requestAnimationFrame(animationLoop);
+    };
+
+    animationLoop(); // Start once
 }
+
+
+
+
+
 
 /**
  * Clears all active intervals from the browser.
  */
-function clearAllIntervals() {
+clearAllIntervals() {
     for (let i = 1; i < 99999; i++) {
         clearInterval(i);
     }
+}
+
 }

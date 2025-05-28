@@ -59,16 +59,15 @@
             <a href="imprint.html" class="imprintTag">Imprint</a>
         </div>
        
-        <button id="btn" class="btn" onclick="init(), screensize()">START</button>
+        <button id="btn" class="btn" onclick="init(), screensize()" >START</button>
         <div class="input-container b">
-            <div>
-                <input name="screen" id="rd1" class="input" type="radio" checked value="FULL">FULL SCREEN</input>
-            </div>
-            <div>
-                <input name="screen" id="rd2" class="input" type="radio" value="SMALL">SMALL SCREEN</input>
-            </div>
-
-        </div>
+    <div>
+        <input name="screen" id="rd1" class="input" type="radio" value="FULL" checked>FULL SCREEN
+    </div>
+    <div>
+        <input name="screen" id="rd2" class="input" type="radio" value="SMALL">SMALL SCREEN
+    </div>
+</div>
         </div>
     </div>
 
@@ -78,6 +77,7 @@
     <canvas class="d-none fullscreen" width="720" height="480" id="canvas">
     </canvas>
     <button id="inGameSounds" class="btn" onclick="toggleSound()">🔊 Mute Sounds</button> 
+    <button class="toggleFoullscreen btn d-none" id="fullscreenBtn" onclick="toggleFullscreen()">Exit Fullscreen</button>
 
     <div id="left" class="mobile_controlls d-none" ontouchstart="touchDownLeft()" ontouchend="touchUpLeft()">
         <img src="./img/arrow_left.png"> </div>
@@ -103,7 +103,7 @@
         <a href="index.html" class="btn restart_mobile">Back to Menu</a>
     </div>
 
-    <div class="mobile-screen" id="mobilescreen">
+    <div class="mobile-screen d-none" id="mobilescreen">
         <div class="mobile-screen-container">
             <h4>PLEASE</h4>
             <img class="mobile-img" src="img/handy quer.jpg">

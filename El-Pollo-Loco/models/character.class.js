@@ -195,6 +195,8 @@ class Character extends MovableObject {
             document.getElementById("canvas").classList.add("d-none");
             document.getElementById("startScreen").classList.add("d-none");
             document.getElementById("youLostScreen").classList.remove("d-none");
+            document.getElementById("inGameSounds").classList.add("d-none");
+            document.getElementById("fullscreenBtn").classList.add("d-none");
         }, 800);
     }
 

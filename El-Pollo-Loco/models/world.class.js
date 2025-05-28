@@ -16,20 +16,22 @@ class World {
     hitChickenSound = window.soundManager.load('chickenHit', 'audio/chicken.mp3');
     hitEndbossSound = window.soundManager.load('endbossHit', 'audio/endboss_hit.mp3');
     coinSound = window.soundManager.load('coin', 'audio/coin.mp3');
-
+    currentlyIngame;
     statusbarBoss = new StatusbarBoss();
+    
 
     /**
      * Creates an instance of the World.
      * @param {HTMLCanvasElement} canvas - The canvas element to draw on.
      */
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
         this.run();
+        
     }
 
     /**
@@ -217,12 +219,14 @@ class World {
         if (this.character.energy === 0) {
             this.character.characterDies();
             window.soundManager.muteAll();
+            currentlyIngame = false
+
         } else {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.energy <= 0) {
                     endboss.endbossDies();
                     window.soundManager.muteAll();
-                }
+                }currentlyIngame = false
             });
         }
     }
