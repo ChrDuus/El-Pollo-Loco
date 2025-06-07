@@ -36,6 +36,7 @@ window.addEventListener('resize', () => {
     handleMobileScreen();
 });
 
+
 /**
  * Initializes the game by setting up canvas, level and world.
  */
@@ -127,6 +128,12 @@ function toggleSound() {
         document.getElementById("inGameSounds").textContent = "🔇 Unmute";
     }
 }
+
+document.getElementById('btn').addEventListener('click', () => {
+    window.soundManager.allowAudio = true;
+    const silent = new Audio();
+    silent.play().catch(() => {});
+});
 
 window.addEventListener("keydown", (e) => {
     if (e.keyCode == 68) {
@@ -295,3 +302,10 @@ function handleMobileScreen() {
         mobileScreen.classList.add('d-none');
     }
 }
+
+/**
+ * Makes Buttons unfocusable
+ */
+document.querySelectorAll('button').forEach(btn => {
+    btn.addEventListener('mouseup', () => btn.blur());
+});

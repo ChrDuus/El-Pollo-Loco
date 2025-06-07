@@ -215,8 +215,12 @@ class World {
         } else {
             this.level.endboss.forEach((endboss) => {
                 if (endboss.energy <= 0) {
+                    
                     endboss.endbossDies();
-                    window.soundManager.muteAll();
+                    setTimeout(() => {
+                        window.soundManager.muteAll();
+                    }, 1200);
+                    
                 }currentlyIngame = false
             });
         }

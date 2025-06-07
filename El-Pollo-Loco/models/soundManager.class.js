@@ -5,6 +5,8 @@ class SoundManager {
     /** @type {boolean} Whether all sounds are muted */
     muted = false;
 
+    allowAudio = false
+
     /**
      * Creates a new SoundManager instance.
      */
@@ -90,6 +92,17 @@ class SoundManager {
 
         this.soundCooldowns.set(name, now);
     }
+
+    playSoundEffectNoCooldown(name, requestedVolume = 1) {
+    const original = this.sounds[name];
+    if (!original) return;
+
+    const sound = new Audio(original.src);
+    sound.volume = requestedVolume * this.globalVolume;
+    this.activeSounds.add(sound);
+    sound.onended = () => this.activeSounds.delete(sound);
+    sound.play().catch(e => console.error("Sound play failed:", e));
+}
 
     /**
      * Mutes all sounds by setting global volume to 0.

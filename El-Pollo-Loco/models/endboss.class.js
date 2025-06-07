@@ -12,6 +12,8 @@ class Endboss extends MovableObject {
     isDying = false;
     isDead = false;
     isHurt = false;
+    
+
 
     IMAGES_ANGRY = [
         "./img/4_enemie_boss_chicken/2_alert/G5.png",
@@ -63,6 +65,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.speed = 0.125;
         this.animate();
+        window.soundManager.load('endbossHit', '/audio/endboss_hit.mp3')
     }
 
      /**
@@ -127,22 +130,23 @@ class Endboss extends MovableObject {
      * Handles the death animation and shows win screen after delay.
      */
     endbossDies() {
+        
     if (this.isDead || this.isDying) return;
-
-    this.isDying = true;
-
+    window.soundManager.playSoundEffectNoCooldown('endbossHit', 0.75)
+    this.isDying = true; 
+    
+      
+      
     setTimeout(() => {
         this.isDying = false;
         this.isDead = true;
-
         clearInterval(this.animationInterval);
-
         document.getElementById("canvas").classList.add("d-none");
         document.getElementById("startScreen").classList.add("d-none");
         document.getElementById("endScreenWon").classList.remove("d-none");
         document.getElementById("inGameSounds").classList.add("d-none");        
         document.getElementById("fullscreenBtn").classList.add("d-none");
-    }, 1000);
+    }, 1500);
 }
 
 

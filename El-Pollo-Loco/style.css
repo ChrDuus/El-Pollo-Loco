@@ -17,6 +17,7 @@ canvas {
     display: block;
     bottom: 25%;
     left: 20%;
+    top: 0%;
     height: 60vh;
     width: 60%;
     position: absolute;
@@ -35,6 +36,10 @@ canvas {
     width: 100vw !important;
     position: absolute;
     z-index: 5;
+}
+
+#fullscreenBtn{
+    font-size: 30px;
 }
 
 .bg-game {
@@ -242,6 +247,34 @@ a {
     width:150px;
     height:65px;
 }
+@media (any-pointer: coarse) {
+    .mobile_controlls {
+        display: flex;
+    }
+}
+
+@media(width: 1366px) and (height:1024px){
+    #fullscreenBtn{
+    bottom: 20%;
+    right: 4%;
+    }
+
+     #left{
+        left:25%;
+    }
+    #right{
+        left: 35%;
+    }
+
+    #jump{
+        right:32%;
+        bottom: 10%;
+    }
+    #throw{
+        right: 22%;
+        bottom: 10%;
+    }
+}
 
 @media only screen and (max-width: 1280px) {
     .mobile_controlls {
@@ -254,6 +287,7 @@ a {
         height: 50vh;
         width: 80%;
         left: 10%;
+       
         max-height: none;
         min-width: 480px;
     }
