@@ -12,10 +12,10 @@ class World {
     throwableObjects = [];
     bottle = new Bottle();
 
-    bottleSound = window.soundManager.load('bottle', 'audio/bottle.mp3');
-    hitChickenSound = window.soundManager.load('chickenHit', 'audio/chicken.mp3');
-    hitEndbossSound = window.soundManager.load('endbossHit', 'audio/endboss_hit.mp3');
-    coinSound = window.soundManager.load('coin', 'audio/coin.mp3');
+    bottleSound = window.soundManager.load('bottle', './audio/bottle.mp3');
+    hitChickenSound = window.soundManager.load('chickenHit', './audio/chicken.mp3');
+    hitEndbossSound = window.soundManager.load('endbossHit', './audio/endboss_hit.mp3');
+    coinSound = window.soundManager.load('coin', './audio/coin.mp3');
     currentlyIngame;
     statusbarBoss = new StatusbarBoss();
     

@@ -65,7 +65,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.speed = 0.125;
         this.animate();
-        window.soundManager.load('endbossHit', '/audio/endboss_hit.mp3')
+        
     }
 
      /**

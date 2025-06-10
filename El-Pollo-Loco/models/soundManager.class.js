@@ -38,7 +38,7 @@ class SoundManager {
      * @param {string} name - Name to reference the sound
      * @param {string} src - Path to the sound file
      */
-    load(name, src) {
+     load(name, src) {
         const audio = new Audio(src);
         this.sounds[name] = audio;
     }
