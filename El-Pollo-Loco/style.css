@@ -247,9 +247,32 @@ a {
     width:150px;
     height:65px;
 }
+
+.input-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 22%;
+    right: 13%;
+    z-index: 99;
+    color: rgb(5, 5, 5);
+    font-size: 18px;
+}
 @media (any-pointer: coarse) {
     .mobile_controlls {
         display: flex;
+    }
+}
+
+@media(max-width: 1366px){
+    #fullscreenBtn{
+    bottom: 20%;
+    right: 4%;
+    display: none;
+    }
+
+    .input-container{
+        display: none;
     }
 }
 
@@ -257,6 +280,11 @@ a {
     #fullscreenBtn{
     bottom: 20%;
     right: 4%;
+    display: none;
+    }
+
+    .input-container{
+        display: none;
     }
 
      #left{
@@ -308,6 +336,15 @@ a {
     width:100px;
     height:60px;
 }
+#fullscreenBtn{
+    bottom: 20%;
+    right: 4%;
+    display: none;
+    }
+
+    .input-container{
+        display: none;
+    }
 }
 
 @media (width: 1280px) and (height: 800px){
@@ -501,16 +538,7 @@ flex-wrap: wrap;
     object-fit: cover;
 }
 
-.input-container {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    bottom: 22%;
-    right: 13%;
-    z-index: 99;
-    color: rgb(5, 5, 5);
-    font-size: 18px;
-}
+
 
 .input-container div {
     margin-top: 5px;

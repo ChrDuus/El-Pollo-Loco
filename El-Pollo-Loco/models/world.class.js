@@ -230,8 +230,10 @@ class World {
      * Main draw loop that clears canvas and draws all game objects.
      */
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // this.ctx.imageSmoothingEnabled = false;
 
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.camera_X = Math.round(this.camera_X);
         this.ctx.translate(this.camera_X, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(-this.camera_X, 0);
@@ -265,6 +267,7 @@ class World {
      */
     addObjectsToMap(objects) {
         objects.forEach(o => {
+            
             this.addToMap(o);
         });
     }

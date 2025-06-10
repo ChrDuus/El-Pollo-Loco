@@ -54,7 +54,13 @@ class SoundManager {
         if (!audio) return;
         audio.volume = requestedVolume * this.globalVolume;
         audio.loop = true;
-        audio.play();
+        audio.play()
+        .then(() => {
+  })
+  .catch((error) => {
+    console.warn('Sound play failed:', error);
+    this.activeSounds.delete(sound); 
+  });
         this.activeLoops.add(audio);
     }
 
@@ -88,7 +94,13 @@ class SoundManager {
         sound.volume = requestedVolume * this.globalVolume;
         this.activeSounds.add(sound);
         sound.onended = () => this.activeSounds.delete(sound);
-        sound.play().catch(e => console.error("Sound play failed:", e));
+        sound.play()
+        .then(() => {
+  })
+  .catch((error) => {
+    console.warn('Sound play failed:', error);
+    this.activeSounds.delete(sound); 
+  });
 
         this.soundCooldowns.set(name, now);
     }
@@ -101,21 +113,33 @@ class SoundManager {
     sound.volume = requestedVolume * this.globalVolume;
     this.activeSounds.add(sound);
     sound.onended = () => this.activeSounds.delete(sound);
-    sound.play().catch(e => console.error("Sound play failed:", e));
+    sound.play()
+    .then(() => {
+  })
+  .catch((error) => {
+    console.warn('Sound play failed:', error);
+    this.activeSounds.delete(sound); 
+  });
 }
 
     /**
      * Mutes all sounds by setting global volume to 0.
      */
     muteAll() {
-        this.setGlobalVolume(0);
+        let volume = localStorage.getItem('volume')
+        if(volume == 0){
+            this.setGlobalVolume(volume)
+        }
     }
 
     /**
      * Unmutes all sounds by restoring global volume to 1.
      */
     unmuteAll() {
-        this.setGlobalVolume(1);
+       let volume = localStorage.getItem('volume')
+       if(volume == 1){
+        this.setGlobalVolume(volume);
+       }
     }
 
     /**

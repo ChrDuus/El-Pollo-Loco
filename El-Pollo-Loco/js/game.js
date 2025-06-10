@@ -48,18 +48,18 @@ function init() {
 }
 
 /**
- * Adjusts the screen size based on user selection and safe it to local Storage.
+ * Adjusts the screen size based on user selection and screen width and safe it to local Storage.
  */
 function screensize() {
     let rd1 = document.getElementById('rd1');
     let rd2 = document.getElementById('rd2');
 
-    if (rd1.checked) {
+    if (rd1.checked || window.innerWidth <= 1366) {
         localStorage.setItem('screenMode', 'FULL');
         document.getElementById('canvas').classList.add('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
         document.getElementById('bg').classList.remove('bg-game');
-    } else if (rd2.checked) {
+    } else if (rd2.checked && window.innerWidth > 1366) {
         localStorage.setItem('screenMode', 'SMALL');
         document.getElementById('canvas').classList.remove('fullscreen');
         document.getElementById('mobilescreen').classList.add('d-none');
@@ -102,7 +102,6 @@ function start() {
     document.getElementById('jump').classList.remove('d-none');
     document.getElementById('throw').classList.remove('d-none');
     document.getElementById('fullscreenBtn').classList.remove('d-none');
-    window.soundManager.unmuteAll();    
     this.currentlyIngame = true    
 }
 
@@ -118,15 +117,18 @@ function info() {
  */
 function toggleSound() {
     if (!window.soundManager) return;
-
-    const isCurrentlyMuted = window.soundManager.globalVolume === 0;
-    if (isCurrentlyMuted) {
-        window.soundManager.unmuteAll();
-        document.getElementById("inGameSounds").textContent = "🔊 Mute Sounds";
-    } else {
+    if(localStorage.getItem('volume') == null){
+        localStorage.setItem('volume', 0)
+    } if (localStorage.getItem('volume') == 1) {
+        localStorage.setItem('volume', 0)
         window.soundManager.muteAll();
         document.getElementById("inGameSounds").textContent = "🔇 Unmute";
-    }
+    }      
+    else   {
+        localStorage.setItem('volume', 1)
+        window.soundManager.unmuteAll();
+        document.getElementById("inGameSounds").textContent = "🔊 Mute Sounds";
+}
 }
 
 document.getElementById('btn').addEventListener('click', () => {
