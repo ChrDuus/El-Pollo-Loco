@@ -70,14 +70,12 @@ function screensize() {
 /**
  * Enables or disables Fullscreen mode
  */
-function toggleFullscreen() {
-    
+function toggleFullscreen() {    
     let mode = localStorage.getItem('screenMode');
     const btn = document.getElementById('fullscreenBtn');
     let rd1 = document.getElementById('rd1');
     let rd2 = document.getElementById('rd2');
-
-    if (mode === 'FULL') {
+    if (mode === 'FULL') {        
         localStorage.setItem('screenMode', 'SMALL');
         btn.innerText = 'Enter Fullscreen';
         rd2.checked = true
@@ -101,7 +99,8 @@ function start() {
     document.getElementById('right').classList.remove('d-none');
     document.getElementById('jump').classList.remove('d-none');
     document.getElementById('throw').classList.remove('d-none');
-    document.getElementById('fullscreenBtn').classList.remove('d-none');
+    document.getElementById('fullscreenBtn').classList.remove('d-none');    
+    checkFullScreenButton()
     this.currentlyIngame = true    
 }
 
@@ -128,6 +127,19 @@ function toggleSound() {
         localStorage.setItem('volume', 1)
         window.soundManager.unmuteAll();
         document.getElementById("inGameSounds").textContent = "🔊 Mute Sounds";
+}
+}
+
+/**
+ * Checks the apperance of the Fullscreenbutton in game
+ */
+function checkFullScreenButton(){
+ if(localStorage.getItem('screenMode') == 'FULL'){
+     let btn =document.getElementById('fullscreenBtn');
+     btn.innerText= 'Exit Fullscreen'
+}if(localStorage.getItem('screenMode') == 'SMALL'){
+    let btn = document.getElementById('fullscreenBtn');
+    btn.innerText= 'Enter Fullscreen'
 }
 }
 
@@ -266,7 +278,7 @@ window.addEventListener('load', () => {
     }
 
     screensize(); 
-    handleMobileScreen(); // neu
+    handleMobileScreen(); 
 });
 
 /**
