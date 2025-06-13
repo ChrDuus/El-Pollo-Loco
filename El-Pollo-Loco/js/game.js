@@ -4,7 +4,7 @@ let keyboard = new Keyboard();
 let playMusic1 = new Audio('audio/music1.mp3');
 let musicOn = false;
 let soundIsMuted = false;
-let soundManager = new SoundManager();
+// let soundManager = new SoundManager();
 let currentlyIngame = false
 
 
@@ -101,7 +101,10 @@ function start() {
     document.getElementById('throw').classList.remove('d-none');
     document.getElementById('fullscreenBtn').classList.remove('d-none');    
     checkFullScreenButton()
-    this.currentlyIngame = true    
+    this.currentlyIngame = true  
+    checkMuteStatus()  
+    console.log(soundManager.globalVolume);
+    
 }
 
 /**
@@ -116,9 +119,11 @@ function info() {
  */
 function toggleSound() {
     if (!window.soundManager) return;
-    if(localStorage.getItem('volume') == null){
+    let volume = localStorage.getItem('volume')
+    if(volume == null){
         localStorage.setItem('volume', 0)
-    } if (localStorage.getItem('volume') == 1) {
+        document.getElementById("inGameSounds").textContent = "🔇 Unmute";
+    } if (volume == 1) {
         localStorage.setItem('volume', 0)
         window.soundManager.muteAll();
         document.getElementById("inGameSounds").textContent = "🔇 Unmute";
@@ -129,6 +134,32 @@ function toggleSound() {
         document.getElementById("inGameSounds").textContent = "🔊 Mute Sounds";
 }
 }
+
+/**
+ * Checks the mute status at the start of the game
+ */
+function checkMuteStatus() {
+    const volume = parseFloat(localStorage.getItem('volume'));
+
+
+    if (isNaN(volume)) {
+        localStorage.setItem('volume', 1)
+        window.soundManager.setGlobalVolume();
+        return;
+    } else if (volume == 1) {
+        document.getElementById("inGameSounds").textContent = "🔊 Mute Sounds";
+        window.soundManager.setGlobalVolume(1)
+    } else if (volume == 0) {
+        document.getElementById("inGameSounds").textContent = "🔇 Unmute";
+        window.soundManager.setGlobalVolume(0)
+    }
+}
+
+
+window.addEventListener('load', () => {
+    checkMuteStatus()
+    
+});
 
 /**
  * Checks the apperance of the Fullscreenbutton in game

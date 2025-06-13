@@ -49,6 +49,7 @@ class SoundManager {
      * @param {number} [requestedVolume=1] - Volume multiplier (0.0 to 1.0)
      */
     playLoop(name, requestedVolume = 1) {
+        if (this.globalVolume === 0) return;
         if (this.muted && this.strictMode) return;
         const audio = this.sounds[name];
         if (!audio) return;
@@ -83,6 +84,7 @@ class SoundManager {
      * @param {number} [requestedVolume=1] - Volume multiplier (0.0 to 1.0)
      */
     playSoundEffect(name, requestedVolume = 1) {
+        if (this.globalVolume === 0) return;
         const now = Date.now();
         const lastPlayed = this.soundCooldowns.get(name) || 0;
         if (now - lastPlayed < this.cooldownTime) return;
@@ -106,6 +108,7 @@ class SoundManager {
     }
 
     playSoundEffectNoCooldown(name, requestedVolume = 1) {
+        if (this.globalVolume === 0) return;
     const original = this.sounds[name];
     if (!original) return;
 
@@ -147,8 +150,8 @@ class SoundManager {
      * @param {number} volume - Volume multiplier (0.0 to 1.0)
      */
     setGlobalVolume(volume) {
-        this.globalVolume = volume;
-        this.activeSounds.forEach(sound => {
+        this.globalVolume = parseFloat(volume);
+         this.activeSounds.forEach(sound => {
             sound.volume = sound.volume * volume;
         });
     }
